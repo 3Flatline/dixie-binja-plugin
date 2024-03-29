@@ -5,13 +5,31 @@ _Powerful static code analyzer that uses a db of 200k vulnerabilities to scan an
 
 ## Description:
 
-The snippet editor started as a simple example UI plugin to demonstrate new features available to UI plugins. It has turned into a functionally useful plugin in its own right. The snippet editor allows you to write small bits of code that might not be big enough to warrant the effort of a full plugin but are long enough that you don't want to retype them every time in the python-console!
+The Dixie Code Scanner plugin leverages the Dixie Code Scanner engine https://3flatline.ai to find vulnerabilities in a number of languages better than other SAST tools. This Binja integration leverages specific features of the engine for C analysis and allows a user to submit decompiled functions directly from the Binary Ninja window.  Users have the capability to get function descriptions and optionally scan for vulnerabilities in the decompiled code.
 
-As an added bonus, all snippets are added to the snippets menu and hot-keys can be associated with them as they make use of the action system. All action-system items are also available through the command-palette (CTL/CMD-p).
+This plugin requires a scubscription to the Dixie Code Scanner, which can be purchased at (https://3flatline.ai/binja)
 
-![](https://github.com/Vector35/snippets/blob/master/media/snippets.gif?raw=true)
+Check out our overview video here: https://www.youtube.com/watch?v=7IEUEgoZC9Q
 
-.
+But 3Flatline, why would I use an LLM for Reverse Engineering? I don't want anyone to know what I'm doing!
+
+Touche, but the Dixie Code Scanner engine is designed to be as private as possible while still leveraging medium/large versions of LLMs, which we have found to be the most performant at specific tasks. Contrary to "throwing code at an LLM", it turns out most LLMS are TERRIBLE at code analysis. So the Dixie Code Scanner engine does a significant amount of analysis before even getting to an LLM.
+
+"Well, how is it private?"
+-You, probably
+
+Our thoughts:
+- We don't retain or retrain on any of your data. All the data we use in our process to identify vulnerabilities is pure: no false positives. Adding your code with "potential" vulnerabilities dilutes the effectiveness of our process.
+- We run a combination of self-hosted models and private inference endpoints using models we have found to be the most performant for certain tasks. None of these models are retraining on your data and the privacy policies of our providers mimic this.
+- No self-identifying information is sent from our engine to the LLMs (unless you put your name in your code).
+- Our database automatically deletes results after 7 days because we don't want to be a massive db of code weaknesses.
+- Your code snippets are deleted immediately upon analysis from our servers.
+- We have designed in local storage to this plugin: so don't keep things on the server or we will delete them!
+- Logs in the backend don't store your source data, it specifically captures what is happening in the engine for debugging to stop accidental retention.
+
+3Flatline was founded by a pair of hackers who understand where you are coming from and have built a platform sensitive to that. It turns out the privacy researchers care about is the same kind of privacy enterprises care about. We would rather make a business supporting vulnerability research than harvesting your data.
+
+*If you're a business or government agency and REALLY want something more private, reach out to info@3flatline.ai. We have other deployment models like deploying into your tentant or running a full offline box for ultra-sensitive environments.* 
 
 
 ## Installation Instructions
@@ -46,6 +64,7 @@ The following dependencies are required for this plugin:
 ## License
 
 This plugin is released under a MIT license.
+
 ## Metadata Version
 
 2
